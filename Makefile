@@ -18,15 +18,15 @@ endif
 default: build
 
 build:
-	docker build -t $(REPO):$(VERSION) ./
+	docker build -t $(REPO):$(VERSION) --build-arg VERSION=$(VERSION) ./
 
 buildx-build:
-	docker buildx build --platform $(PLATFORM) -t $(REPO):$(TAG) \
+	docker buildx build --platform $(PLATFORM) --build-arg VERSION=$(VERSION) -t $(REPO):$(TAG) \
 		--load \
 		./
 
 buildx-push:
-	docker buildx build --platform $(PLATFORM) --push -t $(REPO):$(TAG) \
+	docker buildx build --platform $(PLATFORM) --build-arg VERSION=$(VERSION) --push -t $(REPO):$(TAG) \
 		./
 
 buildx-imagetools-create:
