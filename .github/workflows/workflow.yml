@@ -11,6 +11,7 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  VERSION: 0.61.2
 
 jobs:
   frp-build:
@@ -38,6 +39,7 @@ jobs:
         env:
           ARCH: ${{ matrix.arch }}
           PLATFORM: ${{ matrix.platform }}
+          VERSION: ${{ env.VERSION }}          
         run: |
           make buildx-build
           make test
@@ -53,3 +55,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - uses: ./.github/actions
+        with:
+          version: ${{ env.VERSION }}
+          latest: true
+          latest_major: true

@@ -1,7 +1,7 @@
 FROM alpine:3.21
 
 ARG TARGETPLATFORM
-ARG VERSION=0.61.2
+ARG VERSION
 
 RUN set -ex;  \
     apk add --no-cache bash curl; \
