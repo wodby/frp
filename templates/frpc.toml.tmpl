@@ -1,12 +1,5 @@
 serverAddr = "{{ getenv "FRPC_SERVER_ADDR" }}"
-serverPort = "{{ getenv "FRPC_SERVER_PORT" }}"
-
-[[proxies]]
-name = "frpc"
-type = "http"
-localIP = "127.0.0.1"
-localPort = 8001
-customDomains = ["{{ getenv "FRPC_DOMAIN" }}"]
+serverPort = {{ getenv "FRPC_SERVER_PORT" "8080" }}
 
 auth.method = "{{ getenv "FRPC_AUTH_METHOD" "token" }}"
 {{- if eq (getenv "FRPC_AUTH_METHOD") "oidc" }}
@@ -15,3 +8,10 @@ auth.oidc.clientSecret = "{{ getenv "FRPC_AUTH_OIDC_CLIENT_SECRET" }}"
 auth.oidc.audience = "{{ getenv "FRPC_AUTH_OIDC_AUDIENCE" "frp" }}"
 auth.oidc.tokenEndpointURL = "{{ getenv "FRPC_AUTH_OIDC_TOKEN_ENDPOINT_URL" }}"
 {{- end }}
+
+[[proxies]]
+name = "frpc"
+type = "http"
+localIP = "127.0.0.1"
+localPort = 8001
+customDomains = ["{{ getenv "FRPC_DOMAIN" }}"]
