@@ -10,8 +10,8 @@ customDomains = ["{{ getenv "FRPC_DOMAIN" }}"]
 
 auth.method = "{{ getenv "FRPC_AUTH_METHOD" "token" }}"
 {{- if eq (getenv "FRPC_AUTH_METHOD") "oidc" }}
-auth.oidc.clientID = "{{ getenv "FRPC_OIDC_CLIENT_ID" }}"
-auth.oidc.clientSecret = "{{ getenv "FRPC_OIDC_CLIENT_SECRET" }}"
+auth.oidc.clientID = "{{ getenv "FRPC_AUTH_OIDC_CLIENT_ID" }}"
+auth.oidc.clientSecret = "{{ getenv "FRPC_AUTH_OIDC_CLIENT_SECRET" }}"
 auth.oidc.audience = "{{ getenv "FRPC_AUTH_OIDC_AUDIENCE" "frp" }}"
 auth.oidc.tokenEndpointURL = "{{ getenv "FRPC_AUTH_OIDC_TOKEN_ENDPOINT_URL" }}"
 {{- end }}
