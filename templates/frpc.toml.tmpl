@@ -14,5 +14,4 @@ name = "frpc"
 type = "http"
 localIP = "127.0.0.1"
 localPort = 8001
-customDomains = ["{{ getenv "FRPC_DOMAIN" }}"]
-locations = ["/"]
+subdomain = "{{ getenv "FRPC_SUBDOMAIN" }}"

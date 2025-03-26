@@ -1,6 +1,8 @@
 bindPort = 7000
 vhostHTTPPort = 8080
-
+{{- if getenv "FRPS_SUBDOMAIN_HOST" }}
+subDomainHost = "{{ getenv "FRPS_SUBDOMAIN_HOST" }}"
+{{- end }}
 auth.method = "{{ getenv "FRPS_AUTH_METHOD" "token" }}"
 {{- if eq (getenv "FRPS_AUTH_METHOD") "oidc" }}
 auth.oidc.issuer = "{{ getenv "FRPS_AUTH_OIDC_ISSUER" }}"
