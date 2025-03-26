@@ -4,7 +4,7 @@ ARG TARGETPLATFORM
 ARG VERSION
 
 RUN set -ex;  \
-    apk add --no-cache bash curl; \
+    apk add --no-cache bash curl kubectl; \
     arch="amd64"; \
     if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
         arch="arm64"; \
