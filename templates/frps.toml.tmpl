@@ -1,5 +1,9 @@
 bindPort = 7000
 vhostHTTPPort = 8080
+
+webServer.addr = "0.0.0.0"
+webServer.port = 7500
+
 {{- if getenv "FRPS_SUBDOMAIN_HOST" }}
 subDomainHost = "{{ getenv "FRPS_SUBDOMAIN_HOST" }}"
 {{- end }}
