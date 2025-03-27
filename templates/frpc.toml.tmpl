@@ -20,3 +20,4 @@ customDomains = ["{{ getenv "FRPC_CUSTOM_DOMAIN" }}"]
 locations = ["{{ getenv "FRPC_LOCATION" }}"]
 httpUser = "{{ getenv "FRPC_HTTP_USER" }}"
 httpPassword = "{{ getenv "FRPC_HTTP_PASSWORD" }}"
+requestHeaders.set.Authorization = "Bearer {{ getenv "TOKEN" }}"

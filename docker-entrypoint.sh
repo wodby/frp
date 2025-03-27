@@ -12,6 +12,10 @@ _gotpl() {
     fi
 }
 
+if [[ -f /var/run/secrets/kubernetes.io/serviceaccount/token ]]; then
+  export TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+fi
+
 _gotpl "frps.toml.tmpl" "/etc/frps.toml"
 _gotpl "frpc.toml.tmpl" "/etc/frpc.toml"
 
