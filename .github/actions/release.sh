@@ -6,7 +6,7 @@ if [[ "${GITHUB_REF}" == refs/heads/main || "${GITHUB_REF}" == refs/tags/* ]]; t
   minor_ver="${VERSION%.*}"
   major_ver="${minor_ver%.*}"
 
-  tags=("${VERSION} ${minor_ver}")
+  tags=("${VERSION}" "${minor_ver}")
 
   if [[ -n "${LATEST_MAJOR}" ]]; then
     tags+=("${major_ver}")
