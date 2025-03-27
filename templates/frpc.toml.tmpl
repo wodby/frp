@@ -15,3 +15,7 @@ type = "http"
 localIP = "127.0.0.1"
 localPort = 8001
 subdomain = "{{ getenv "FRPC_SUBDOMAIN" }}"
+[proxies.plugin]
+type = "http_proxy"
+httpUser = "{{ getenv "FRPC_HTTP_USER" }}"
+httpPassword = "{{ getenv "FRPC_HTTP_PASSWORD" }}"
