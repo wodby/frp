@@ -9,13 +9,14 @@ auth.oidc.audience = "{{ getenv "FRPC_AUTH_OIDC_AUDIENCE" "frp" }}"
 auth.oidc.tokenEndpointURL = "{{ getenv "FRPC_AUTH_OIDC_TOKEN_ENDPOINT_URL" }}"
 {{- end }}
 
+log.level = "{{ getenv "FRPC_LOG_LEVEL" "info" }}"
+
 [[proxies]]
 name = "frpc"
 type = "http"
 localIP = "127.0.0.1"
 localPort = 8001
-subdomain = "{{ getenv "FRPC_SUBDOMAIN" }}"
-[proxies.plugin]
-type = "http_proxy"
+customDomains = ["{{ getenv "FRPC_CUSTOM_DOMAIN" }}"]
+locations = ["{{ getenv "FRPC_LOCATION" }}"]
 httpUser = "{{ getenv "FRPC_HTTP_USER" }}"
 httpPassword = "{{ getenv "FRPC_HTTP_PASSWORD" }}"
