@@ -15,11 +15,9 @@ log.level = "{{ getenv "FRPC_LOG_LEVEL" "info" }}"
 name = "{{ getenv "FRPC_NAME" "frpc" }}"
 type = "{{ getenv "FRPC_TYPE" "http" }}"
 localIP = "{{ getenv "FRPC_LOCAL_IP" "127.0.0.1" }}"
-localPort = "{{ getenv "FRPC_LOCAL_PORT" "80" }}"
+localPort = "{{ getenv "FRPC_LOCAL_PORT" "8001" }}"
 customDomains = ["{{ getenv "FRPC_CUSTOM_DOMAIN" }}"]
 locations = ["{{ getenv "FRPC_LOCATION" }}"]
 httpUser = "{{ getenv "FRPC_HTTP_USER" }}"
 httpPassword = "{{ getenv "FRPC_HTTP_PASSWORD" }}"
-{{- if getenv "FRPC_HEADER_AUTHORIZATION" }}
-requestHeaders.set.Authorization = "{{ getenv "FRPC_HEADER_AUTHORIZATION" }}"
-{{- end }}
+requestHeaders.set.Authorization = "Bearer {{ getenv "TOKEN" }}"
