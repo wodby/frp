@@ -4,6 +4,8 @@ vhostHTTPPort = 8080
 webServer.addr = "0.0.0.0"
 webServer.port = 7500
 
+log.level = "{{ getenv "FRPS_LOG_LEVEL" "info" }}"
+
 {{- if getenv "FRPS_SUBDOMAIN_HOST" }}
 subDomainHost = "{{ getenv "FRPS_SUBDOMAIN_HOST" }}"
 {{- end }}
