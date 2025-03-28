@@ -29,9 +29,6 @@ httpUser = "{{ getenv "FRPC_HTTP_USER" }}"
 {{- if getenv "FRPC_HTTP_PASSWORD" }}
 httpPassword = "{{ getenv "FRPC_HTTP_PASSWORD" }}"
 {{- end }}
-{{- if getenv "FRPC_HEADERS_JSON" }}
-{{- $headersJSON := getenv "FRPC_HEADERS_JSON" -}}
-{{- range $key, $value := json $headersJSON }}
-requestHeaders.set.{{ $key }} = "{{ $value }}"
-{{- end }}
+{{- if getenv "FRPC_SET_AUTHORIZATION_BEARER_TOKEN" }}
+requestHeaders.set.Authorization = "Bearer {{ getenv "TOKEN" }}"
 {{- end }}
