@@ -12,12 +12,14 @@ auth.oidc.tokenEndpointURL = "{{ getenv "FRPC_AUTH_OIDC_TOKEN_ENDPOINT_URL" }}"
 log.level = "{{ getenv "FRPC_LOG_LEVEL" "info" }}"
 
 [[proxies]]
-name = "frpc"
-type = "http"
-localIP = "127.0.0.1"
-localPort = 8001
+name = "{{ getenv "FRPC_NAME" "frpc" }}"
+type = "{{ getenv "FRPC_TYPE" "http" }}"
+localIP = "{{ getenv "FRPC_LOCAL_IP" "127.0.0.1" }}"
+localPort = "{{ getenv "FRPC_LOCAL_PORT" "80" }}"
 customDomains = ["{{ getenv "FRPC_CUSTOM_DOMAIN" }}"]
 locations = ["{{ getenv "FRPC_LOCATION" }}"]
 httpUser = "{{ getenv "FRPC_HTTP_USER" }}"
 httpPassword = "{{ getenv "FRPC_HTTP_PASSWORD" }}"
-requestHeaders.set.Authorization = "Bearer {{ getenv "TOKEN" }}"
+{{- if getenv "FRPC_HEADER_AUTHORIZATION" }}
+requestHeaders.set.Authorization = "{{ getenv "FRPC_HEADER_AUTHORIZATION" }}"
+{{- end }}
