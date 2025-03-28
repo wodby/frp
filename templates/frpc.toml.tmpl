@@ -17,9 +17,15 @@ type = "{{ getenv "FRPC_TYPE" "http" }}"
 localIP = "{{ getenv "FRPC_LOCAL_IP" "127.0.0.1" }}"
 localPort = "{{ getenv "FRPC_LOCAL_PORT" "80" }}"
 customDomains = ["{{ getenv "FRPC_CUSTOM_DOMAIN" }}"]
+{{- if getenv "FRPC_LOCATION" }}
 locations = ["{{ getenv "FRPC_LOCATION" }}"]
+{{- end }}
+{{- if getenv "FRPC_HTTP_USER" }}
 httpUser = "{{ getenv "FRPC_HTTP_USER" }}"
+{{- end }}
+{{- if getenv "FRPC_HTTP_PASSWORD" }}
 httpPassword = "{{ getenv "FRPC_HTTP_PASSWORD" }}"
+{{- end }}
 {{- if getenv "FRPC_HEADERS_JSON" }}
 {{- $headersJSON := getenv "FRPC_HEADERS_JSON" -}}
 {{- range $key, $value := json $headersJSON }}
