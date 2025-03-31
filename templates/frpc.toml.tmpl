@@ -13,6 +13,7 @@ auth.oidc.tokenEndpointURL = "{{ getenv "FRPC_AUTH_OIDC_TOKEN_ENDPOINT_URL" }}"
 {{- end }}
 
 log.level = "{{ getenv "FRPC_LOG_LEVEL" "info" }}"
+loginFailExit = {{ getenv "LOGIN_FAIL_EXIT" "false" }}
 
 [[proxies]]
 name = "{{ getenv "FRPC_NAME" "frpc" }}"
