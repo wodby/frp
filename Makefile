@@ -9,6 +9,8 @@ TAG ?= $(VERSION)
 
 PLATFORM ?= linux/arm64
 
+IMAGETOOLS_TAG ?= $(TAG)
+
 ifneq ($(ARCH),)
 	override TAG := $(TAG)-$(ARCH)
 endif
@@ -18,7 +20,7 @@ endif
 default: build
 
 build:
-	docker build -t $(REPO):$(VERSION) --build-arg VERSION=$(VERSION) ./
+	docker build -t $(REPO):$(TAG) --build-arg VERSION=$(VERSION) ./
 
 buildx-build:
 	docker buildx build --platform $(PLATFORM) --build-arg VERSION=$(VERSION) -t $(REPO):$(TAG) \
@@ -31,8 +33,8 @@ buildx-push:
 
 buildx-imagetools-create:
 	docker buildx imagetools create -t $(REPO):$(TAG) \
-				$(REPO):$(VERSION)-amd64 \
-				$(REPO):$(VERSION)-arm64
+				$(REPO):$(TAG)-amd64 \
+				$(REPO):$(TAG)-arm64
 .PHONY: buildx-imagetools-create
 
 test:
