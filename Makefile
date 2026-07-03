@@ -1,6 +1,6 @@
 -include env_make
 
-VERSION ?= 0.66.0
+VERSION ?= 0.69.1
 
 REPO = wodby/frp
 NAME = frp

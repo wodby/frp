@@ -9,7 +9,7 @@ on:
     - '*'
 
 env:
-  VERSION: 0.66.0
+  VERSION: 0.69.1
 
 jobs:
   frp-build:
