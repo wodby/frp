@@ -15,9 +15,9 @@ runs:
   steps:
   - name: Build image
     env:
-      VERSION: ${{ inputs.version }}
+      FRP_VERSION: ${{ inputs.version }}
       LATEST: ${{ inputs.latest }}
-      LATEST_MAJOR: ${{ inputs.latest_major }}    
+      LATEST_MAJOR: ${{ inputs.latest_major }}
     run: |
       . $GITHUB_ACTION_PATH/release.sh
     shell: bash

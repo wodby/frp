@@ -1,5 +1,8 @@
 serverAddr = "{{ getenv "FRPC_SERVER_ADDR" }}"
 serverPort = {{ getenv "FRPC_SERVER_PORT" "8080" }}
+{{- if getenv "FRPC_TRANSPORT_PROXY_URL" }}
+transport.proxyURL = "{{ getenv "FRPC_TRANSPORT_PROXY_URL" }}"
+{{- end }}
 
 auth.method = "{{ getenv "FRPC_AUTH_METHOD" "token" }}"
 {{- if eq (getenv "FRPC_AUTH_METHOD") "token" }}
@@ -10,6 +13,9 @@ auth.oidc.clientID = "{{ getenv "FRPC_AUTH_OIDC_CLIENT_ID" }}"
 auth.oidc.clientSecret = "{{ getenv "FRPC_AUTH_OIDC_CLIENT_SECRET" }}"
 auth.oidc.audience = "{{ getenv "FRPC_AUTH_OIDC_AUDIENCE" "frp" }}"
 auth.oidc.tokenEndpointURL = "{{ getenv "FRPC_AUTH_OIDC_TOKEN_ENDPOINT_URL" }}"
+{{- if getenv "FRPC_AUTH_OIDC_PROXY_URL" }}
+auth.oidc.proxyURL = "{{ getenv "FRPC_AUTH_OIDC_PROXY_URL" }}"
+{{- end }}
 {{- end }}
 
 log.level = "{{ getenv "FRPC_LOG_LEVEL" "info" }}"

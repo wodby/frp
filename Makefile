@@ -1,11 +1,11 @@
 -include env_make
 
-VERSION ?= 0.69.1
+FRP_VERSION ?= 0.69.1
 
 REPO = wodby/frp
 NAME = frp
 
-TAG ?= $(VERSION)
+TAG ?= $(FRP_VERSION)
 
 PLATFORM ?= linux/arm64
 
@@ -20,19 +20,19 @@ endif
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) --build-arg VERSION=$(VERSION) ./
+	docker build -t $(REPO):$(TAG) --build-arg FRP_VERSION=$(FRP_VERSION) ./
 
 buildx-build:
-	docker buildx build --platform $(PLATFORM) --build-arg VERSION=$(VERSION) -t $(REPO):$(TAG) \
+	docker buildx build --platform $(PLATFORM) --build-arg FRP_VERSION=$(FRP_VERSION) -t $(REPO):$(TAG) \
 		--load \
 		./
 
 buildx-push:
-	docker buildx build --platform $(PLATFORM) --build-arg VERSION=$(VERSION) --push -t $(REPO):$(TAG) \
+	docker buildx build --platform $(PLATFORM) --build-arg FRP_VERSION=$(FRP_VERSION) --push -t $(REPO):$(TAG) \
 		./
 
 buildx-imagetools-create:
-	docker buildx imagetools create -t $(REPO):$(TAG) \
+	docker buildx imagetools create -t $(REPO):$(IMAGETOOLS_TAG) \
 				$(REPO):$(TAG)-amd64 \
 				$(REPO):$(TAG)-arm64
 .PHONY: buildx-imagetools-create
@@ -44,13 +44,13 @@ push:
 	docker push $(REPO):$(TAG)
 
 shell:
-	docker run --rm --name $(NAME) -i -t $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(VERSION) /bin/bash
+	docker run --rm --name $(NAME) -i -t $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(TAG) /bin/bash
 
 run:
-	docker run --rm --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(VERSION) $(CMD)
+	docker run --rm --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(TAG) $(CMD)
 
 start:
-	docker run -d --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(VERSION)
+	docker run -d --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(TAG)
 
 stop:
 	docker stop $(NAME)
@@ -61,5 +61,4 @@ logs:
 clean:
 	-docker rm -f $(NAME)
 
-release: build
-	make push -e VERSION=$(VERSION)
+release: build push

@@ -9,7 +9,7 @@ on:
     - '*'
 
 env:
-  VERSION: 0.69.1
+  FRP_VERSION: 0.69.1
 
 jobs:
   frp-build:
@@ -33,7 +33,7 @@ jobs:
       - name: build and push
         env:
           ARCH: ${{ matrix.arch }}
-          VERSION: ${{ env.VERSION }}          
+          FRP_VERSION: ${{ env.FRP_VERSION }}
         run: |
           make
           make test
@@ -50,6 +50,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - uses: ./.github/actions
         with:
-          version: ${{ env.VERSION }}
+          version: ${{ env.FRP_VERSION }}
           latest: true
           latest_major: true
