@@ -38,7 +38,7 @@ buildx-imagetools-create:
 .PHONY: buildx-imagetools-create
 
 test:
-	echo 'no tests :('
+	bash tests/frpc-config.sh $(REPO):$(TAG)
 
 push:
 	docker push $(REPO):$(TAG)
