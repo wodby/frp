@@ -39,6 +39,7 @@ buildx-imagetools-create:
 
 test:
 	bash tests/frpc-config.sh $(REPO):$(TAG)
+	bash tests/frps-config.sh $(REPO):$(TAG)
 
 push:
 	docker push $(REPO):$(TAG)

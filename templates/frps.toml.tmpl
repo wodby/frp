@@ -1,17 +1,25 @@
-bindPort = 7000
-vhostHTTPPort = 8080
+bindPort = {{ getenv "FRPS_BIND_PORT" "7000" }}
+vhostHTTPPort = {{ getenv "FRPS_VHOST_HTTP_PORT" "8080" }}
 
-webServer.addr = "0.0.0.0"
-webServer.port = 7500
+webServer.addr = "{{ getenv "FRPS_WEB_SERVER_ADDR" "127.0.0.1" }}"
+webServer.port = {{ getenv "FRPS_WEB_SERVER_PORT" "7500" }}
+{{- if getenv "FRPS_WEB_SERVER_USER" }}
+webServer.user = "{{ getenv "FRPS_WEB_SERVER_USER" }}"
+webServer.password = "{{ getenv "FRPS_WEB_SERVER_PASSWORD" }}"
+{{- end }}
 
 log.level = "{{ getenv "FRPS_LOG_LEVEL" "info" }}"
+transport.tls.force = {{ getenv "FRPS_TLS_FORCE" "false" }}
 
 {{- if getenv "FRPS_SUBDOMAIN_HOST" }}
 subDomainHost = "{{ getenv "FRPS_SUBDOMAIN_HOST" }}"
 {{- end }}
 auth.method = "{{ getenv "FRPS_AUTH_METHOD" "token" }}"
-{{- if eq (getenv "FRPS_AUTH_METHOD") "token" }}
+{{- if or (not (getenv "FRPS_AUTH_METHOD")) (eq (getenv "FRPS_AUTH_METHOD") "token") }}
 auth.token = "{{ getenv "FRPS_AUTH_TOKEN" }}"
+{{- end }}
+{{- if getenv "FRPS_AUTH_ADDITIONAL_SCOPES" }}
+auth.additionalScopes = {{ getenv "FRPS_AUTH_ADDITIONAL_SCOPES" }}
 {{- end }}
 {{- if eq (getenv "FRPS_AUTH_METHOD") "oidc" }}
 auth.oidc.issuer = "{{ getenv "FRPS_AUTH_OIDC_ISSUER" }}"
