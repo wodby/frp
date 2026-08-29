@@ -32,3 +32,10 @@ renders `/etc/frps.toml` from environment variables before startup.
 Set both dashboard credentials when listening on a non-loopback address. The
 Wodby FRPS chart enables TLS for control connections and supplies generated,
 stable credentials for token authentication and the dashboard.
+
+## FRP client
+
+When FRPC uses OIDC, set `FRPC_AUTH_ADDITIONAL_SCOPES` to a JSON array to
+authenticate the same additional connection types required by FRPS. For
+example, `["HeartBeats","NewWorkConns"]` authenticates heartbeat and work
+connections as well as the initial control connection.

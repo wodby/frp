@@ -5,6 +5,9 @@ transport.proxyURL = "{{ getenv "FRPC_TRANSPORT_PROXY_URL" }}"
 {{- end }}
 
 auth.method = "{{ getenv "FRPC_AUTH_METHOD" "token" }}"
+{{- if getenv "FRPC_AUTH_ADDITIONAL_SCOPES" }}
+auth.additionalScopes = {{ getenv "FRPC_AUTH_ADDITIONAL_SCOPES" }}
+{{- end }}
 {{- if eq (getenv "FRPC_AUTH_METHOD") "token" }}
 auth.token = "{{ getenv "FRPC_AUTH_TOKEN" }}"    
 {{- end }}

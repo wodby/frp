@@ -29,6 +29,11 @@ docker run --rm \
 config=$(render -e FRPC_SET_AUTHORIZATION_BEARER_TOKEN=1 -e TOKEN=test-token)
 grep -Fqx 'requestHeaders.set.Authorization = "Bearer test-token"' <<<"$config"
 
+config=$(render \
+  -e FRPC_AUTH_METHOD=oidc \
+  -e 'FRPC_AUTH_ADDITIONAL_SCOPES=["HeartBeats","NewWorkConns"]')
+grep -Fqx 'auth.additionalScopes = ["HeartBeats","NewWorkConns"]' <<<"$config"
+
 config=$(render)
 if grep -Fq 'requestHeaders.set.Authorization' <<<"$config"; then
   echo "default mode unexpectedly rendered an authorization override" >&2
