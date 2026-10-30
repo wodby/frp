@@ -45,3 +45,17 @@ requestHeaders.set.Authorization = ""
 {{- else if getenv "FRPC_SET_AUTHORIZATION_BEARER_TOKEN" }}
 requestHeaders.set.Authorization = "Bearer {{ getenv "TOKEN" }}"
 {{- end }}
+{{- /* The terminal route forwards to kube-token-proxy, which holds no credentials. It needs its own Basic Auth, because the route would otherwise put the Kubernetes API on the internet, so it is not rendered without one. */}}
+{{- if and (getenv "FRPC_SHELL_LOCATION") (getenv "FRPC_SHELL_HTTP_USER") (getenv "FRPC_SHELL_HTTP_PASSWORD") }}
+
+[[proxies]]
+name = "{{ getenv "FRPC_NAME" "frpc" }}-shell"
+type = "http"
+localIP = "127.0.0.1"
+localPort = {{ getenv "FRPC_SHELL_LOCAL_PORT" "8002" }}
+customDomains = ["{{ getenv "FRPC_CUSTOM_DOMAIN" }}"]
+locations = ["{{ getenv "FRPC_SHELL_LOCATION" }}"]
+httpUser = "{{ getenv "FRPC_SHELL_HTTP_USER" }}"
+httpPassword = "{{ getenv "FRPC_SHELL_HTTP_PASSWORD" }}"
+requestHeaders.set.Authorization = ""
+{{- end }}

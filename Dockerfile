@@ -1,3 +1,11 @@
+FROM golang:1.26-alpine AS kube-token-proxy
+
+WORKDIR /src
+COPY kube-token-proxy/ ./
+RUN set -ex; \
+    CGO_ENABLED=0 go test ./...; \
+    CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /kube-token-proxy .
+
 FROM alpine:3.23
 
 ARG TARGETPLATFORM
@@ -14,6 +22,7 @@ RUN set -ex;  \
     mv /tmp/frps /usr/local/bin; \
     rm -rf /tmp/*   
 
+COPY --from=kube-token-proxy /kube-token-proxy /usr/local/bin/
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY templates /etc/gotpl
 
