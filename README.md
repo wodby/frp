@@ -49,3 +49,22 @@ When FRPC uses OIDC, set `FRPC_AUTH_ADDITIONAL_SCOPES` to a JSON array to
 authenticate the same additional connection types required by FRPS. For
 example, `["HeartBeats","NewWorkConns"]` authenticates heartbeat and work
 connections as well as the initial control connection.
+
+### Terminal route
+
+Setting `FRPC_SHELL_LOCATION`, `FRPC_SHELL_HTTP_USER` and
+`FRPC_SHELL_HTTP_PASSWORD` adds a second HTTP route that forwards to
+`kube-token-proxy` on `127.0.0.1:${FRPC_SHELL_LOCAL_PORT:-8002}`. The route is
+not created unless all three are set, because without Basic Auth it would put
+the Kubernetes API on the internet.
+
+`kube-token-proxy` holds no credentials. It takes a Kubernetes token from the
+`X-Wodby-Kube-Token` header, sends it to the API as a bearer token, and forwards
+only pod exec requests.
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `KUBE_TOKEN_PROXY_PREFIX` | required | Path prefix of the route, removed before forwarding |
+| `KUBE_TOKEN_PROXY_LISTEN` | `127.0.0.1:8002` | Listen address |
+| `KUBE_TOKEN_PROXY_API` | `https://kubernetes.default.svc` | Kubernetes API URL |
+| `KUBE_TOKEN_PROXY_CA_FILE` | service account `ca.crt` | Cluster CA certificate |
