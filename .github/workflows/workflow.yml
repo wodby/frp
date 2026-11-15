@@ -10,7 +10,7 @@ on:
     - '!*-r[0-9]*'
 
 env:
-  FRP_VERSION: 0.69.1
+  FRP_VERSION: 0.72.0
 
 jobs:
   frp-build:
