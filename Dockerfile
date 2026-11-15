@@ -11,9 +11,16 @@ FROM alpine:3.23
 ARG TARGETPLATFORM
 ARG TARGETARCH
 ARG FRP_VERSION
+# Official kubectl build: Alpine's package lags Go and module security fixes. kubectl only runs
+# `kubectl proxy` and simple object deletes here, so any version within the supported skew works.
+ARG KUBECTL_VERSION=1.34.13
 
 RUN set -ex;  \
-    apk add --no-cache bash curl kubectl; \
+    apk add --no-cache bash curl; \
+    kubectl_url="https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl"; \
+    wget -qO /usr/local/bin/kubectl "${kubectl_url}"; \
+    echo "$(wget -qO- "${kubectl_url}.sha256")  /usr/local/bin/kubectl" | sha256sum -c -; \
+    chmod 0755 /usr/local/bin/kubectl; \
     dockerplatform=${TARGETPLATFORM:-linux/amd64};\
     gotpl_url="https://github.com/wodby/gotpl/releases/latest/download/gotpl-${TARGETPLATFORM/\//-}.tar.gz"; \
     wget -qO- "${gotpl_url}" | tar xz --no-same-owner -C /usr/local/bin; \
