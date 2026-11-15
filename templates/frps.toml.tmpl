@@ -25,3 +25,14 @@ auth.additionalScopes = {{ getenv "FRPS_AUTH_ADDITIONAL_SCOPES" }}
 auth.oidc.issuer = "{{ getenv "FRPS_AUTH_OIDC_ISSUER" }}"
 auth.oidc.audience = "{{ getenv "FRPS_AUTH_OIDC_AUDIENCE" "frp" }}"
 {{- end }}
+{{- if getenv "FRPS_PLUGIN_ADDR" }}
+
+[[httpPlugins]]
+name = "{{ getenv "FRPS_PLUGIN_NAME" "plugin" }}"
+addr = "{{ getenv "FRPS_PLUGIN_ADDR" }}"
+path = "{{ getenv "FRPS_PLUGIN_PATH" "/" }}"
+ops = {{ getenv "FRPS_PLUGIN_OPS" "[\"Login\",\"NewProxy\"]" }}
+{{- if getenv "FRPS_PLUGIN_TLS_VERIFY" }}
+tlsVerify = {{ getenv "FRPS_PLUGIN_TLS_VERIFY" }}
+{{- end }}
+{{- end }}

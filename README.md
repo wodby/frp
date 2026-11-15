@@ -38,6 +38,11 @@ renders `/etc/frps.toml` from environment variables before startup.
 | `FRPS_AUTH_ADDITIONAL_SCOPES` | empty | JSON array of additional token-auth scopes |
 | `FRPS_TLS_FORCE` | `false` | Require TLS for client control connections |
 | `FRPS_LOG_LEVEL` | `info` | FRPS log level |
+| `FRPS_PLUGIN_ADDR` | empty | Address of an HTTP server plugin, `host:port` or `https://host:port`. Enables the plugin when set |
+| `FRPS_PLUGIN_PATH` | `/` | Request path of the plugin |
+| `FRPS_PLUGIN_OPS` | `["Login","NewProxy"]` | JSON array of the operations sent to the plugin |
+| `FRPS_PLUGIN_NAME` | `plugin` | Plugin name shown in FRPS logs |
+| `FRPS_PLUGIN_TLS_VERIFY` | empty | Set to `true` to verify the plugin's TLS certificate |
 
 Set both dashboard credentials when listening on a non-loopback address. The
 Wodby FRPS chart enables TLS for control connections and supplies generated,
